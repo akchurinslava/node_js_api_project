@@ -1,9 +1,11 @@
-const app = require('express')();
+const express = require('express')
+const app = express()
 const port = 8080
 const swaggerUI = require('swagger-ui-express');
 const yamljs = require('yamljs');
 //const swaggerDocument = require('./docs/swagger.json');
 const swaggerDocument = yamljs.load('./docs/swagger.yaml');
+app.use(express.json())
 const games = [
     {id: 1, name: "Team Fortress 1", price: "free", rating: 11},
     {id: 2, name: "Team Fortress 2", price: 2.99, rating: 24},
@@ -23,7 +25,26 @@ app.get('/games/:id', (req, res) =>{
     res.send(games[req.params.id - 1])
 })
 
+app.post('/games', (req, res) =>{
+    if(!req.body.name || !req.body.price || !req.body.rating){
+        return res.status(400).send({error: "One or all parameteres are missing"})
+    }
+    let game = {
+        id: games.length + 1,
+        name: req.body.name,
+        price: req.body.price,
+        rating: req.body.rating
+    }
+    games.push(game)
+    
+    res.status(201).location(`${getBaseUrl(req)}/games/${games.length}`).send(games)
+})
+
 app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 app.listen(port, () => {console.log(`API up at: http://localhost:${port}`)})
+
+function getBaseUrl(req){
+    return req.connection && req.connection.encrypted ? 'https' : 'http' + `://${req.headers.host}`
+}
 

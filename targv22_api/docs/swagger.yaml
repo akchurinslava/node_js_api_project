@@ -25,6 +25,43 @@ paths:
                     description: Return a list all games
             description: |
                 Returns a list all games in API
+        post:
+            requestBody:
+                description: A new game to be created
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/error'
+                        examples:
+                            Parameters missing:
+                                value:
+                                    error: One or all parameters are missing
+                required: true
+            tags:
+                - new-game
+            responses:
+                '201':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/new-game'
+                            examples:
+                                Game that is added:
+                                    value:
+                                        name: Game of the Year
+                                        price: 68.25
+                                        rating: 71
+                    description: New game has been created.
+                '400':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                    description: |
+                        One or all parametrers are missing
+            summary: Create a game into the API(either db or array)
+            description: |
+                Creates a new game
     '/games/{id}':
         get:
             tags:
@@ -79,3 +116,23 @@ components:
                     type: string
             example:
                 error: Error message.
+        new-game:
+            title: Root Type for new-game
+            description: new game object
+            required:
+                - name
+                - price
+                - rating
+            type: object
+            properties:
+                name:
+                    type: string
+                price:
+                    format: double
+                    type: number
+                rating:
+                    type: integer
+            example:
+                name: Tetris
+                price: 100
+                rating: 10
