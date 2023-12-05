@@ -1,0 +1,81 @@
+openapi: 3.0.2
+info:
+    title: targv22_api
+    version: 1.0.0
+paths:
+    /games:
+        get:
+            tags:
+                - games
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: string
+                            examples:
+                                List of games:
+                                    value:
+                                        - Team Fortress 2
+                                        - CyberPank
+                                        - Paladins
+                                        - Super Mario
+                    description: Return a list all games
+            description: |
+                Returns a list all games in API
+    '/games/{id}':
+        get:
+            tags:
+                - details
+            parameters:
+                -
+                    examples:
+                        ID:
+                            value: '65'
+                    name: id
+                    description: ID of game.
+                    schema:
+                        type: integer
+                    in: path
+                    required: true
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: string
+                            examples:
+                                Details of a game:
+                                    value: |4
+
+                                            {"id": 1, "name": "Team Fortress 1", "price": "free", "rating": 11}
+                    description: Return full details of a given id game
+                '404':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                Game/w+ was not found:
+                                    value:
+                                        error: game \w+ was not found in game array.
+                    description: Game was not found in games array.
+            operationId: id
+            summary: Returns full details of a given game.
+            description: |
+                Returns full details of a given game, based on user input id by user.
+components:
+    schemas:
+        error:
+            title: Root Type for error
+            description: ''
+            type: object
+            properties:
+                error:
+                    type: string
+            example:
+                error: Error message.
