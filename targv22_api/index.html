@@ -22,6 +22,27 @@
             <td>{{game.rating}}/100</td>
         </tr>
     </table>
+    <div id="gameInfoModal" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table table-striped">
+                <tr><th>ID</th><td>{{gameInModal.id}}</td></tr>
+                <tr><th>Name</th><td>{{gameInModal.name}}</td></tr>
+                <tr><th>Rating</th><td>{{gameInModal.rating}}</td></tr>
+              </table>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              
+            </div>
+          </div>
+        </div>
+      </div>
     
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
@@ -29,24 +50,24 @@
     <script>
         const vue = Vue.createApp({
             data(){
+                
                 return{
-                    games: [
-                        // {id: 1, name: "Team Fortress 1", price: "free", rating: 11},
-                        // {id: 2, name: "Team Fortress 2", price: 2.99, rating: 24},
-                        // {id: 3, name: "Team Fortress 3", price: 4.32, rating: 39},
-                        // {id: 4, name: "Team Fortress 4", price: 6.3, rating: 44},
-                        // {id: 5, name: "Team Fortress 5", price: 6.32, rating: 56},
-                        // {id: 6, name: "Team Fortress 6", price: 6.3, rating: 61},
-                        // {id: 7, name: "Team Fortress 7", price: 63.3, rating: 74},
-                        // {id: 8, name: "Team Fortress 8", price: 6.23, rating: 82},
-                        // {id: 9, name: "Super Mario 9", price: 353.2, rating: 93}
-                    ]
+                    games: [],
+                    gameInModal: {name: null},
+                
                 }
             },
 
             async created(){
                 this.games = await (await fetch('http://localhost:8080/games')).json();
+            },
+            methods: {
+            getGame: async function(id){
+                this.gameInModal = await (await fetch(`http://localhost:8080/games/${id}`)).json();
+                let gameInModal = new bootstrap.Modal(document.getElementById('gameInfoModal'), {})
+                gameInModal.show();
             }
+        }
         }).mount('#app')
 
     </script>
