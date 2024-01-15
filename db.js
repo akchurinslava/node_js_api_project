@@ -8,8 +8,10 @@ const sequelize = new Sequelize(
         dialect: "mariadb",
         define: {
             timestamps: false
-        }
-    }
+        },
+    },
+
+
 );
 
 const db = {}

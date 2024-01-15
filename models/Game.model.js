@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const Game = sequelize.define("Game", {
+    const Game = sequelize.define("Games", {
         id:{
             type: Sequelize.INTEGER,
             primaryKey: true,
@@ -7,7 +7,7 @@ module.exports = (sequelize, Sequelize) => {
         },
 
         name:{
-            type: Sequelize.VARCHAR,
+            type: Sequelize.STRING,
             allowNull: false
         },
         price: {
