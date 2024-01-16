@@ -33,6 +33,10 @@ app.get('/games', (req, res) => {
     res.send(games);
 });
 
+app.get('/orders', (req, res) => {
+    res.send(orders);
+});
+
 app.post('/games', (req, res) =>{
     if(!req.body.name || !req.body.price || !req.body.rating){
         return res.status(400).send({error: "One or all parameteres are missing"})
