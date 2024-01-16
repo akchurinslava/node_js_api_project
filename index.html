@@ -16,8 +16,8 @@
             <th>Rating</th>
 
         </tr>
-        <tr v-for="game in games">
-            <td>{{game.name}}</td>
+        <tr v-for="game in games" :key="game.id">
+            <td @click="getGame(game.id)" style="cursor: pointer;">{{game.name}}</td>
             <td>{{game.price}}</td>
             <td>{{game.rating}}/100</td>
         </tr>

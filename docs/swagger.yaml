@@ -105,6 +105,311 @@ paths:
             summary: Returns full details of a given game.
             description: |
                 Returns full details of a given game, based on user input id by user.
+        delete:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/delete-game'
+                required: true
+            tags:
+                - delete
+            parameters:
+                -
+                    examples:
+                        integer:
+                            value: '55'
+                    name: id
+                    description: ID for game in array
+                    schema:
+                        type: integer
+                    in: path
+                    required: true
+            responses:
+                '204':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/delete-game'
+                            examples:
+                                response 204:
+                                    value:
+                                        error: No Content
+                '404':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                Game not found:
+                                    value:
+                                        error: Game \w+ was not found
+            operationId: id
+            summary: Delete a game by id
+            description: Deletes a game of the given id
+    /orders:
+        get:
+            requestBody: {}
+            tags:
+                - orders
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: string
+                            examples:
+                                List of orders:
+                                    value:
+                                        - Order1
+                                        - Order2
+                                        - Order3
+                    description: Return a list all orders
+        post:
+            requestBody:
+                description: A new order to be created
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/error'
+                        examples:
+                            Parametees missing:
+                                value:
+                                    error: One or all parameters are missing
+                required: true
+            tags:
+                - new-prder
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/new-order'
+                            examples:
+                                Order that is add:
+                                    value: |-
+                                        {
+                                            "id": 1,
+                                            "order_name": "Number1"
+                                            "total": 43,
+                                            "clients_id": 1
+                                            "games_id": 1
+                                            
+                                        }
+                    description: A new order has been created.
+                '400':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                    description: One or all parametrers are missing
+            summary: Create an order into the API(either db or array)
+    '/orders{id}':
+        get:
+            parameters:
+                -
+                    examples:
+                        ID:
+                            value: '64'
+                    name: id
+                    description: ID of order.
+                    schema:
+                        type: integer
+                    in: path
+                    required: true
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items: {}
+                            examples:
+                                Details of order:
+                                    value: |4
+
+
+                                            {"id": 1, "order_name": "Number450", "total": 50, "clients_id": 11, "games_id": 11}
+                    description: Return full details of a given id order
+                '404':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                Order/w+ was not found:
+                                    value:
+                                        error: order \w+ was not found in ordwer array.
+                    description: Order was not found in games array.
+            operationId: id
+            summary: Return full details of a given orders
+            description: |
+                Returns full details of a given order, based on user input id by user.
+        delete:
+            parameters:
+                -
+                    examples:
+                        integer:
+                            value: '55'
+                    name: id
+                    description: ID for client in array
+                    schema:
+                        type: integer
+                    in: path
+                    required: true
+            responses:
+                '204':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/delete-order'
+                            examples:
+                                response 204:
+                                    value:
+                                        error: No Content
+                '404':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                Order not found:
+                                    value:
+                                        error: Order \w+ was not found
+            operationId: id
+            summary: Delete an order by id
+    /clients:
+        get:
+            tags:
+                - clients
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: string
+                            examples:
+                                List of Clients:
+                                    value:
+                                        - Client1
+                                        - Client2
+                                        - Client3
+                    description: Return a list of all clients
+        post:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/error'
+                        examples:
+                            One or all parameters are missing:
+                                value:
+                                    error: One or all parameters are missing
+                required: true
+            tags:
+                - new-client
+            responses:
+                '201':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/new-client'
+                            examples:
+                                Game that is ad...:
+                                    value:
+                                        id: 1
+                                        name: Aneli
+                                        phone: '53643534'
+                                        email: ssaa@gmail.com
+                    description: New client has been created.
+                '400':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                    description: One or all parametrers are missing
+            summary: Create a order into the API(either db or array)
+    '/clients{id}':
+        get:
+            parameters:
+                -
+                    examples:
+                        ID:
+                            value: '66'
+                    name: id
+                    description: ID of client.
+                    schema:
+                        type: integer
+                    in: path
+                    required: true
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: string
+                            examples:
+                                Details of a client:
+                                    value: |4
+
+                                            {"id": 1, "name": "Vova", "phone": "536434", "email": "fdsa@gmail.com"}
+                    description: Return full details of a given id client
+                '404':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                client \\w+ was not found in client array:
+                                    value:
+                                        error: client \w+ was not found in client array.
+                    description: Client was not found in clients array.
+            operationId: id
+            summary: Returns full details of a given client.
+            description: |
+                Returns full details of a given client, based on user input id by user.
+        delete:
+            tags:
+                - delete
+            parameters:
+                -
+                    examples:
+                        integer:
+                            value: '51'
+                    name: id
+                    description: ID for client in array
+                    schema:
+                        type: integer
+                    in: path
+                    required: true
+            responses:
+                '204':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/delete-client'
+                            examples:
+                                response 204:
+                                    value:
+                                        error: No Content
+                '404':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+                            examples:
+                                Client not found:
+                                    value:
+                                        error: Client \w+ was not found
+            operationId: id
+            summary: Delete a client by id
+            description: Deletes a client of given id
 components:
     schemas:
         error:
@@ -136,3 +441,41 @@ components:
                 name: Tetris
                 price: 100
                 rating: 10
+        delete-game:
+            description: ''
+            required:
+                - id
+            type: object
+            properties:
+                id:
+                    format: int32
+                    description: ''
+                    type: integer
+            example:
+                id: 1
+        new-order:
+            description: new order object
+            type: object
+        delete-order:
+            description: ''
+            required:
+                - id
+            type: object
+            properties:
+                id:
+                    format: int32
+                    description: ''
+                    type: integer
+        new-client:
+            description: new game object
+            type: object
+        delete-client:
+            description: ''
+            required:
+                - id
+            type: object
+            properties:
+                id:
+                    format: int32
+                    description: ''
+                    type: integer
