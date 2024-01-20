@@ -40,7 +40,9 @@ app.get('/games', (req, res) => {
     res.send(games);
 });
 
-
+app.get('/orders', (req, res) => {
+    res.send(orders);
+});
 
 app.get('/clients', (req, res) => {
     res.send(orders);
