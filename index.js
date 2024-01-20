@@ -63,19 +63,7 @@ app.post('/games', (req, res) =>{
     res.status(201).location(`${getBaseUrl(req)}/games/${games.length}`).send(games)
 });
 
-app.post('/orders', (req, res) =>{
-    if(!req.body.name || !req.body.total){
-        return res.status(400).send({error: "One or all parameteres are missing"})
-    }
-    let order = {
-        id: orders.length + 1,
-        name: req.body.name,
-        total: req.body.total,
-    }
-    orders.push(order)
-    
-    res.status(201).location(`${getBaseUrl(req)}/orders/${orders.length}`).send(orders)
-});
+
 
 app.post('/clients', (req, res) =>{
     if(!req.body.name || !req.body.phone || !req.body.email){
