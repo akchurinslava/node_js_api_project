@@ -109,10 +109,10 @@ app.delete('/orders/:id', (req, res) =>{
 });
 
 app.delete('/clients/:id', (req, res) =>{
-    if(typeof orders[req.params.id - 1] === 'undefined'){
-        return res.status(404).send({error: "Order not found"})
+    if(typeof clients[req.params.id - 1] === 'undefined'){
+        return res.status(404).send({error: "Client not found"})
     };
-    orders.splice(req.params.id -1, 1);
+    clients.splice(req.params.id -1, 1);
     res.status(204).send({error: "No Content"});
 });
 
