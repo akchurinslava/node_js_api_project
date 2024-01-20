@@ -84,8 +84,8 @@
         </tr>
         <tr v-for="client in clients" :key="client.id">
             <td @click="getClient(clietn.id)" style="cursor: pointer;">{{client.name}}</td>
-            <td>{{game.phone}}</td>
-            <td>{{game.email}}</td>
+            <td>{{client.phone}}</td>
+            <td>{{client.email}}</td>
         </tr>
     </table>
     <div id="clientInfoModal" class="modal" tabindex="-1">
@@ -116,4 +116,4 @@
     <script src="https://www.unpkg.com/vue@3.3.11/dist/vue.global.js"></script>
     <script src="games-frontend/rest-client.js"></script>
 </body>
-</html> 
+</html>

@@ -27,6 +27,13 @@ app.get('/orders/:id', (req, res) =>{
     res.send(orders[req.params.id - 1])
 })
 
+app.get('/clients/:id', (req, res) =>{
+    if(typeof orders[req.params.id - 1] === 'undefined'){
+        return res.status(404).send({error: "Client not found"})
+    }
+    res.send(clients[req.params.id - 1])
+})
+
 
 
 app.get('/games', (req, res) => {
@@ -34,6 +41,10 @@ app.get('/games', (req, res) => {
 });
 
 app.get('/orders', (req, res) => {
+    res.send(orders);
+});
+
+app.get('/clients', (req, res) => {
     res.send(orders);
 });
 
@@ -52,11 +63,56 @@ app.post('/games', (req, res) =>{
     res.status(201).location(`${getBaseUrl(req)}/games/${games.length}`).send(games)
 });
 
+app.post('/orders', (req, res) =>{
+    if(!req.body.name || !req.body.total){
+        return res.status(400).send({error: "One or all parameteres are missing"})
+    }
+    let order = {
+        id: orders.length + 1,
+        name: req.body.name,
+        total: req.body.total,
+    }
+    orders.push(order)
+    
+    res.status(201).location(`${getBaseUrl(req)}/orders/${orders.length}`).send(orders)
+});
+
+app.post('/clients', (req, res) =>{
+    if(!req.body.name || !req.body.phone || !req.body.email){
+        return res.status(400).send({error: "One or all parameteres are missing"})
+    }
+    let client = {
+        id: orders.length + 1,
+        name: req.body.name,
+        phone: req.body.phone,
+        email: req.body.email,
+    }
+    clients.push(client)
+    
+    res.status(201).location(`${getBaseUrl(req)}/clients/${clients.length}`).send(clients)
+});
+
 app.delete('/games/:id', (req, res) =>{
     if(typeof games[req.params.id - 1] === 'undefined'){
         return res.status(404).send({error: "Game not found"})
     };
     games.splice(req.params.id -1, 1);
+    res.status(204).send({error: "No Content"});
+});
+
+app.delete('/orders/:id', (req, res) =>{
+    if(typeof orders[req.params.id - 1] === 'undefined'){
+        return res.status(404).send({error: "Order not found"})
+    };
+    orders.splice(req.params.id -1, 1);
+    res.status(204).send({error: "No Content"});
+});
+
+app.delete('/clients/:id', (req, res) =>{
+    if(typeof orders[req.params.id - 1] === 'undefined'){
+        return res.status(404).send({error: "Order not found"})
+    };
+    orders.splice(req.params.id -1, 1);
     res.status(204).send({error: "No Content"});
 });
 
