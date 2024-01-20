@@ -108,7 +108,13 @@ app.delete('/orders/:id', (req, res) =>{
     res.status(204).send({error: "No Content"});
 });
 
-
+app.delete('/clients/:id', (req, res) =>{
+    if(typeof clients[req.params.id - 1] === 'undefined'){
+        return res.status(404).send({error: "Client not found"})
+    };
+    clients.splice(req.params.id -1, 1);
+    res.status(204).send({error: "No Content"});
+});
 
 app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
