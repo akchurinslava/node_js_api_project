@@ -18,7 +18,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
             allowNull: false,
             references: {
-                model: 'Clients',
+                model: Clients,
                 key: 'id'
             }
         },
@@ -26,10 +26,16 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
             allowNull: false,
             references:{
-                model: 'Games',
+                model: Games,
                 key: 'id'
             }
         },
     })
+    Game.belongsToMany(Client, {through: Order})
+    Client.belongsToMany(Game, {through: Order})
+    Game.hasMany(Order)
+    Order.belongsTo(Game)
+    Client.hasMany(Order)
+    Order.belongsTo(Client)
     return Order
 }
