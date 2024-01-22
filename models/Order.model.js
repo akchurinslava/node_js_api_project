@@ -1,4 +1,4 @@
-module.exports = (sequelize, Sequelize) => {
+module.exports = (sequelize, Sequelize,Game,Client) => {
     const Order = sequelize.define("Orders", {
         id:{
             type: Sequelize.INTEGER,
@@ -10,23 +10,23 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
             allowNull: false
         },
-        total: {
+        total:{
             type: Sequelize.INTEGER,
             allowNull: false
         },
-        clients_id: {
+        clients_id:{
             type: Sequelize.INTEGER,
             allowNull: false,
             references: {
-                model: Clients,
+                model: Client,
                 key: 'id'
             }
         },
-        games_id: {
+        games_id:{
             type: Sequelize.INTEGER,
             allowNull: false,
             references:{
-                model: Games,
+                model: Game,
                 key: 'id'
             }
         },

@@ -19,7 +19,7 @@
         <tr v-for="game in games" :key="game.id">
             <td @click="getGame(game.id)" style="cursor: pointer;">{{game.name}}</td>
             <td>{{game.price}}</td>
-            <td>{{game.rating}}/100</td>
+            <td>{{game.rating}}</td>
         </tr>
     </table>
     <div id="gameInfoModal" class="modal" tabindex="-1">

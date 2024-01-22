@@ -18,8 +18,8 @@ const db = {}
 db.Sequelize = Sequelize
 db.sequelize = sequelize
 db.games = require("./models/Game.model")(sequelize,Sequelize)
-db.games = require("./models/Client.model")(sequelize,Sequelize)
-db.games = require("./models/Order.model")(sequelize,Sequelize,db.games,db.clients)
+db.clients = require("./models/Client.model")(sequelize,Sequelize)
+db.orders = require("./models/Order.model")(sequelize,Sequelize,db.games,db.clients)
 module.exports = db
 
 async function Sync(){
